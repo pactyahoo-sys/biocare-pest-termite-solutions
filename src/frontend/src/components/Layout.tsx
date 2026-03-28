@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/context/LanguageContext";
 import { cn } from "@/lib/utils";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Menu, Phone, Shield, X } from "lucide-react";
+import { Menu, MessageCircle, Phone, X } from "lucide-react";
 import { useState } from "react";
 
 const navLinks = [
@@ -40,6 +41,7 @@ function NavItem({
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { toggleLang, t } = useLanguage();
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -51,17 +53,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               className="flex items-center gap-2 flex-shrink-0"
               data-ocid="nav.link"
             >
-              <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center">
-                <Shield className="w-5 h-5 text-white" />
-              </div>
-              <div className="leading-tight">
-                <div className="font-heading font-bold text-lg text-primary leading-none">
-                  BioCare
-                </div>
-                <div className="text-xs text-muted-foreground leading-none">
-                  Pest &amp; Termite Solutions
-                </div>
-              </div>
+              <img
+                src="/assets/uploads/file_0000000037f471fab29858c58ee8145d-019d34ee-1fed-7273-9bcc-2c0514d1fc9c-1.png"
+                alt="BioCare BPTS Logo"
+                className="h-12 w-auto object-contain"
+              />
             </Link>
 
             <nav
@@ -73,14 +69,25 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               ))}
             </nav>
 
-            <a
-              href="tel:+918838510443"
-              className="hidden lg:flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
-              data-ocid="nav.link"
-            >
-              <Phone className="w-4 h-4" />
-              <span>+91 88385 10443</span>
-            </a>
+            <div className="hidden lg:flex items-center gap-3">
+              <a
+                href="tel:+918838510443"
+                className="flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
+                data-ocid="nav.link"
+              >
+                <Phone className="w-4 h-4" />
+                <span>+91 88385 10443</span>
+              </a>
+              <button
+                type="button"
+                onClick={toggleLang}
+                className="text-xs font-bold px-2.5 py-1 rounded-full bg-primary text-white hover:bg-primary/80 transition-colors"
+                aria-label="Toggle language"
+                data-ocid="nav.toggle"
+              >
+                {t.langToggle}
+              </button>
+            </div>
 
             <Button
               variant="ghost"
@@ -110,12 +117,23 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 />
               </div>
             ))}
-            <a
-              href="tel:+918838510443"
-              className="flex items-center gap-2 px-3 py-2 mt-2 text-sm font-semibold text-primary"
-            >
-              <Phone className="w-4 h-4" /> +91 88385 10443
-            </a>
+            <div className="flex items-center justify-between mt-2 px-3">
+              <a
+                href="tel:+918838510443"
+                className="flex items-center gap-2 py-2 text-sm font-semibold text-primary"
+              >
+                <Phone className="w-4 h-4" /> +91 88385 10443
+              </a>
+              <button
+                type="button"
+                onClick={toggleLang}
+                className="text-xs font-bold px-2.5 py-1 rounded-full bg-primary text-white hover:bg-primary/80 transition-colors"
+                aria-label="Toggle language"
+                data-ocid="nav.toggle"
+              >
+                {t.langToggle}
+              </button>
+            </div>
           </div>
         )}
       </header>
@@ -127,12 +145,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 pb-8 border-b border-white/10">
             <div>
               <div className="flex items-center gap-2 mb-3">
-                <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                  <Shield className="w-4 h-4 text-white" />
-                </div>
-                <span className="font-heading font-bold text-lg text-white">
-                  BioCare
-                </span>
+                <img
+                  src="/assets/uploads/file_0000000037f471fab29858c58ee8145d-019d34ee-1fed-7273-9bcc-2c0514d1fc9c-1.png"
+                  alt="BioCare BPTS Logo"
+                  className="h-14 w-auto object-contain"
+                />
               </div>
               <p className="text-sm text-white/70 leading-relaxed">
                 Professional Pest Control &amp; Termite Pre-Construction
@@ -228,6 +245,30 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </footer>
+
+      {/* Floating action buttons */}
+      <div className="fixed bottom-6 right-5 flex flex-col gap-3 z-50">
+        <a
+          href="https://wa.me/919952258863"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="WhatsApp"
+          className="w-13 h-13 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform"
+          style={{ background: "#25D366", width: "52px", height: "52px" }}
+          data-ocid="nav.link"
+        >
+          <MessageCircle className="w-6 h-6 text-white" />
+        </a>
+        <a
+          href="tel:+918838510443"
+          aria-label="Call us"
+          className="w-13 h-13 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform"
+          style={{ background: "#007bff", width: "52px", height: "52px" }}
+          data-ocid="nav.link"
+        >
+          <Phone className="w-6 h-6 text-white" />
+        </a>
+      </div>
     </div>
   );
 }

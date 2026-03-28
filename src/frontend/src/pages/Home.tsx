@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useLanguage } from "@/context/LanguageContext";
 import { Link } from "@tanstack/react-router";
 import {
   Award,
@@ -11,6 +12,7 @@ import {
   MessageCircle,
   Phone,
   ShieldCheck,
+  Star,
   Users,
   UtensilsCrossed,
 } from "lucide-react";
@@ -70,7 +72,32 @@ const features = [
   },
 ];
 
+const reviews = [
+  {
+    name: "Rajesh K.",
+    text: "The technicians were professional and the results were excellent. No pests at all after treatment.",
+    stars: 5,
+  },
+  {
+    name: "Anitha M.",
+    text: "Highly recommended! Very thorough inspection and eco-friendly options available.",
+    stars: 5,
+  },
+  {
+    name: "Suresh, Hotel Manager",
+    text: "Used for hotel AMC. Best pest control service in Trivandrum.",
+    stars: 5,
+  },
+  {
+    name: "Priya R.",
+    text: "Fast response, free inspection same day. Very satisfied.",
+    stars: 5,
+  },
+];
+
 export default function Home() {
+  const { t } = useLanguage();
+
   return (
     <>
       <section
@@ -94,12 +121,10 @@ export default function Home() {
                 Thiruvananthapuram, Kerala
               </span>
               <h1 className="font-heading font-bold text-4xl sm:text-5xl lg:text-6xl text-white leading-tight mb-4">
-                Welcome to BioCare Pest &amp; Termite Solutions
+                {t.heroTitle}
               </h1>
               <p className="text-white/85 text-lg mb-6 leading-relaxed">
-                Professional pest control and termite pre-construction treatment
-                for homes, hotels, restaurants, offices, hospitals, and
-                construction sites across Thiruvananthapuram.
+                {t.heroSubtitle}
               </p>
               <ul className="space-y-2 mb-8">
                 {[
@@ -124,7 +149,7 @@ export default function Home() {
                   className="bg-primary hover:bg-primary/90 text-white rounded-lg shadow-lg"
                   data-ocid="hero.primary_button"
                 >
-                  <Link to="/contact">Request a Free Inspection</Link>
+                  <Link to="/contact">{t.heroCta}</Link>
                 </Button>
                 <Button
                   asChild
@@ -139,7 +164,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                   >
                     <MessageCircle className="w-4 h-4 mr-2" />
-                    WhatsApp Us
+                    {t.whatsappUs}
                   </a>
                 </Button>
               </div>
@@ -168,7 +193,7 @@ export default function Home() {
             className="text-center mb-10"
           >
             <h2 className="font-heading font-bold text-3xl sm:text-4xl text-foreground mb-3">
-              Our Services
+              {t.ourServices}
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto">
               Complete pest and termite protection for homes, businesses, and
@@ -245,6 +270,57 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Customer Reviews */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-10"
+          >
+            <h2 className="font-heading font-bold text-3xl sm:text-4xl text-foreground mb-3">
+              {t.customerReviews}
+            </h2>
+            <p className="text-muted-foreground max-w-xl mx-auto">
+              Trusted by hundreds of satisfied customers across
+              Thiruvananthapuram.
+            </p>
+          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {reviews.map((review, i) => (
+              <motion.div
+                key={review.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                data-ocid={`reviews.item.${i + 1}`}
+              >
+                <Card className="h-full border-border shadow-card">
+                  <CardContent className="p-6 flex flex-col h-full">
+                    <div className="flex gap-0.5 mb-3">
+                      <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                      <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                      <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                      <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                      <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                    </div>
+                    <p className="text-sm text-muted-foreground leading-relaxed flex-1">
+                      &ldquo;{review.text}&rdquo;
+                    </p>
+                    <p className="mt-4 text-sm font-semibold text-foreground">
+                      — {review.name}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-primary rounded-2xl overflow-hidden">
@@ -264,7 +340,7 @@ export default function Home() {
                     className="bg-white text-primary hover:bg-white/90 rounded-lg font-semibold"
                     data-ocid="cta.primary_button"
                   >
-                    <Link to="/contact">Book Free Inspection</Link>
+                    <Link to="/contact">{t.bookFreeInspection}</Link>
                   </Button>
                   <a
                     href="tel:+918838510443"

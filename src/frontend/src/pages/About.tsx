@@ -1,38 +1,33 @@
+import { useLanguage } from "@/context/LanguageContext";
 import { Award, CheckCircle2, Clock, ShieldCheck, Star } from "lucide-react";
 import { motion } from "motion/react";
 
-const trustItems = [
-  {
-    icon: ShieldCheck,
-    label: "Licensed & Trained Technicians",
-    text: "Our pest control technicians are fully licensed, trained, and insured to carry out all treatments safely.",
-  },
-  {
-    icon: Award,
-    label: "IS-Approved Chemicals",
-    text: "We use only IS-approved and government-recommended chemicals for all pest and termite treatments.",
-  },
-  {
-    icon: Star,
-    label: "Transparent Pricing",
-    text: "Clear documentation and transparent pricing with no hidden charges — we explain everything upfront.",
-  },
-  {
-    icon: Clock,
-    label: "Quick Response",
-    text: "Free inspection within 24 hours in Thiruvananthapuram and nearby areas. We value your time.",
-  },
-];
-
-const servicesList = [
-  "General pest control for homes and commercial properties",
-  "Termite pre-construction treatment for new buildings",
-  "Hotel and restaurant pest-control AMC",
-  "EcoCare eco-friendly low-toxicity treatments",
-  "Rodent, cockroach, ant, bed bug, lizard, and mosquito control",
-];
-
 export default function About() {
+  const { t } = useLanguage();
+
+  const trustItems = [
+    {
+      icon: ShieldCheck,
+      label: t.licensedLabel,
+      text: t.licensedText,
+    },
+    {
+      icon: Award,
+      label: t.approvedLabel,
+      text: t.approvedText,
+    },
+    {
+      icon: Star,
+      label: t.transparentLabel,
+      text: t.transparentText,
+    },
+    {
+      icon: Clock,
+      label: t.quickLabel,
+      text: t.quickText,
+    },
+  ];
+
   return (
     <>
       <section className="bg-accent py-16 px-4 sm:px-6 lg:px-8">
@@ -43,12 +38,10 @@ export default function About() {
             transition={{ duration: 0.5 }}
           >
             <h1 className="font-heading font-bold text-4xl sm:text-5xl text-foreground mb-4">
-              About BioCare Pest &amp; Termite Solutions
+              {t.aboutTitle}
             </h1>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              Based in Thiruvananthapuram (Trivandrum), Kerala. We specialise in
-              protecting homes, hotels, restaurants, offices, hospitals, and new
-              construction sites from pests and termites.
+              {t.aboutSubtitle}
             </p>
           </motion.div>
         </div>
@@ -64,13 +57,10 @@ export default function About() {
               transition={{ duration: 0.5 }}
             >
               <h2 className="font-heading font-bold text-2xl text-foreground mb-4">
-                Our Mission
+                {t.ourMission}
               </h2>
               <p className="text-muted-foreground leading-relaxed">
-                To provide safe, effective, and affordable pest and termite
-                control services using modern techniques, trained technicians,
-                and both chemical and eco-friendly options — giving our clients
-                peace of mind and a pest-free environment.
+                {t.missionText}
               </p>
             </motion.div>
             <motion.div
@@ -80,10 +70,10 @@ export default function About() {
               transition={{ duration: 0.5 }}
             >
               <h2 className="font-heading font-bold text-2xl text-foreground mb-4">
-                Services We Offer
+                {t.servicesWeOffer}
               </h2>
               <ul className="space-y-2">
-                {servicesList.map((s) => (
+                {t.servicesListItems.map((s) => (
                   <li key={s} className="flex items-start gap-2 text-sm">
                     <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
                     <span>{s}</span>
@@ -103,7 +93,7 @@ export default function About() {
             viewport={{ once: true }}
             className="font-heading font-bold text-2xl sm:text-3xl text-center text-foreground mb-10"
           >
-            Why Trust BioCare?
+            {t.whyTrustBiocare}
           </motion.h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {trustItems.map((item, i) => (

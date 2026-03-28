@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useLanguage } from "@/context/LanguageContext";
 import { Link } from "@tanstack/react-router";
 import {
   Building2,
@@ -13,38 +14,29 @@ import {
 } from "lucide-react";
 import { motion } from "motion/react";
 
-const steps = [
-  {
-    icon: ClipboardList,
-    title: "1. Site Inspection",
-    desc: "Our technician checks soil condition, moisture, drainage, and nearby vegetation.",
-  },
-  {
-    icon: Droplets,
-    title: "2. Soil Treatment",
-    desc: "IS-approved termiticide applied around the foundation, plinth, and under the slab before concrete casting.",
-  },
-  {
-    icon: FileText,
-    title: "3. Documentation",
-    desc: "You receive a treatment certificate showing treated area, date, and protection period — typically 10 years.",
-  },
-];
-
-const idealFor = [
-  { icon: Home, label: "Individual Houses & Villas" },
-  { icon: Building2, label: "Apartments & Commercial Complexes" },
-  { icon: Hotel, label: "Hotels & Resorts" },
-  { icon: Hospital, label: "Hospitals & Offices" },
-];
-
-const ecoAddons = [
-  "Physical barriers (mesh, sealing)",
-  "Monitoring traps and non-chemical inspection methods",
-  "Reduced chemical load with smart application",
-];
-
 export default function Termite() {
+  const { t } = useLanguage();
+
+  const steps = [
+    {
+      icon: ClipboardList,
+      title: t.step1Title,
+      desc: t.step1Desc,
+    },
+    {
+      icon: Droplets,
+      title: t.step2Title,
+      desc: t.step2Desc,
+    },
+    {
+      icon: FileText,
+      title: t.step3Title,
+      desc: t.step3Desc,
+    },
+  ];
+
+  const idealForIcons = [Home, Building2, Hotel, Hospital];
+
   return (
     <>
       <section
@@ -62,14 +54,13 @@ export default function Termite() {
             transition={{ duration: 0.5 }}
           >
             <span className="inline-block bg-primary/30 text-white text-sm font-medium px-3 py-1 rounded-full mb-4">
-              New Construction Protection
+              {t.termitePageBadge}
             </span>
             <h1 className="font-heading font-bold text-4xl sm:text-5xl text-white mb-4">
-              Termite Pre-Construction Treatment
+              {t.termitePageTitle}
             </h1>
             <p className="text-white/80 text-lg mb-8">
-              Thiruvananthapuram — Protect your new building from termites with
-              professional pre-construction treatment.
+              {t.termitePageSubtitle}
             </p>
             <Button
               asChild
@@ -77,7 +68,7 @@ export default function Termite() {
               className="bg-primary text-white hover:bg-primary/90 rounded-lg"
               data-ocid="termite.primary_button"
             >
-              <Link to="/contact">Get Free Inspection</Link>
+              <Link to="/contact">{t.getFreeInspection}</Link>
             </Button>
           </motion.div>
         </div>
@@ -91,7 +82,7 @@ export default function Termite() {
             viewport={{ once: true }}
             className="font-heading font-bold text-3xl text-center text-foreground mb-10"
           >
-            How It Works
+            {t.howItWorks}
           </motion.h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {steps.map((step, i) => (
@@ -125,27 +116,30 @@ export default function Termite() {
       <section className="py-14 bg-accent px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <h2 className="font-heading font-bold text-2xl sm:text-3xl text-center text-foreground mb-8">
-            Ideal For
+            {t.idealFor}
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
-            {idealFor.map((item, i) => (
-              <motion.div
-                key={item.label}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="flex flex-col items-center text-center p-4 bg-white rounded-xl shadow-xs"
-                data-ocid={`termite.item.${i + 4}`}
-              >
-                <div className="w-11 h-11 rounded-lg bg-accent flex items-center justify-center mb-3">
-                  <item.icon className="w-6 h-6 text-primary" />
-                </div>
-                <span className="font-medium text-sm text-foreground">
-                  {item.label}
-                </span>
-              </motion.div>
-            ))}
+            {t.idealForItems.map((label, i) => {
+              const Icon = idealForIcons[i];
+              return (
+                <motion.div
+                  key={label}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="flex flex-col items-center text-center p-4 bg-white rounded-xl shadow-xs"
+                  data-ocid={`termite.item.${i + 4}`}
+                >
+                  <div className="w-11 h-11 rounded-lg bg-accent flex items-center justify-center mb-3">
+                    <Icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <span className="font-medium text-sm text-foreground">
+                    {label}
+                  </span>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -154,10 +148,10 @@ export default function Termite() {
         <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-10">
           <div>
             <h2 className="font-heading font-bold text-2xl text-foreground mb-4">
-              Eco-Friendly Add-ons
+              {t.ecoFriendlyAddons}
             </h2>
             <ul className="space-y-3">
-              {ecoAddons.map((a) => (
+              {t.ecoAddonItems.map((a) => (
                 <li key={a} className="flex items-start gap-2 text-sm">
                   <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
                   <span>{a}</span>
@@ -167,19 +161,18 @@ export default function Termite() {
           </div>
           <div>
             <h2 className="font-heading font-bold text-2xl text-foreground mb-4">
-              Locations We Serve
+              {t.locationsWeServe}
             </h2>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              We serve Thiruvananthapuram city and nearby suburbs including all
-              major residential areas, townships, and construction zones.
+              {t.locationsText}
             </p>
             <div className="mt-6">
               <Button
                 asChild
                 className="bg-primary text-white hover:bg-primary/90"
-                data-ocid="termite.primary_button"
+                data-ocid="termite.secondary_button"
               >
-                <Link to="/contact">Book Free Inspection</Link>
+                <Link to="/contact">{t.bookFreeInspection}</Link>
               </Button>
             </div>
           </div>

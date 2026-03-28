@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useLanguage } from "@/context/LanguageContext";
 import { useSubmitForm } from "@/hooks/useQueries";
 import { Loader2, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { motion } from "motion/react";
@@ -17,6 +18,7 @@ const serviceOptions = [
 ];
 
 export default function Contact() {
+  const { t } = useLanguage();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
@@ -44,6 +46,8 @@ export default function Contact() {
           toast.success(
             "Your request has been submitted! We will contact you within 24 hours.",
           );
+          const waText = `Name: ${name}%0APhone: ${phone}%0AAddress: ${address}%0AServices: ${selectedServices.join(", ")}`;
+          window.open(`https://wa.me/919952258863?text=${waText}`, "_blank");
         },
         onError: () => {
           toast.error(
@@ -64,7 +68,7 @@ export default function Contact() {
             transition={{ duration: 0.5 }}
           >
             <h1 className="font-heading font-bold text-4xl sm:text-5xl text-foreground mb-3">
-              Contact BioCare
+              {t.contactBiocare}
             </h1>
             <p className="text-muted-foreground text-lg">
               We are ready to serve you in Thiruvananthapuram and nearby areas.
@@ -83,7 +87,7 @@ export default function Contact() {
               transition={{ duration: 0.5 }}
             >
               <h2 className="font-heading font-bold text-2xl text-foreground mb-6">
-                Get in Touch
+                {t.getInTouch}
               </h2>
               <div className="space-y-4 mb-8">
                 <a
@@ -181,7 +185,7 @@ export default function Contact() {
               transition={{ duration: 0.5, delay: 0.1 }}
             >
               <h2 className="font-heading font-bold text-2xl text-foreground mb-6">
-                Book a Free Inspection
+                {t.bookFreeInspection}
               </h2>
               {submitted ? (
                 <div
@@ -292,9 +296,33 @@ export default function Contact() {
                       "Submit Request"
                     )}
                   </Button>
+                  <p className="text-xs text-muted-foreground text-center">
+                    Submitting will also open WhatsApp to send your enquiry
+                    directly.
+                  </p>
                 </form>
               )}
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Google Maps */}
+      <section className="bg-white pb-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="font-heading font-bold text-2xl text-foreground mb-4 text-center">
+            Our Location
+          </h2>
+          <div className="rounded-xl overflow-hidden border border-border shadow-sm">
+            <iframe
+              src="https://maps.google.com/maps?q=Thiruvananthapuram&t=&z=13&ie=UTF8&iwloc=&output=embed"
+              width="100%"
+              height="350"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              title="BioCare Location Map"
+            />
           </div>
         </div>
       </section>
