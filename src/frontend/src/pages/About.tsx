@@ -85,6 +85,33 @@ export default function About() {
         </div>
       </section>
 
+      {/* Team in Action Photo Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <motion.h2
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="font-heading font-bold text-2xl sm:text-3xl text-center text-foreground mb-8"
+          >
+            Our Team in Action
+          </motion.h2>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.97 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="rounded-2xl overflow-hidden shadow-md"
+          >
+            <img
+              src="/assets/uploads/file_00000000ee0c71fa898a59ab20d16d91-019d3506-6f0a-72d8-b0dc-d97c4593fced-1.png"
+              alt="BPTS team providing professional pest control services"
+              className="w-full h-auto object-cover"
+            />
+          </motion.div>
+        </div>
+      </section>
+
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-accent">
         <div className="max-w-7xl mx-auto">
           <motion.h2
